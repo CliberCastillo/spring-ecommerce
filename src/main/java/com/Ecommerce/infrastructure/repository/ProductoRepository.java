@@ -5,13 +5,11 @@ import com.Ecommerce.infrastructure.crud.ProductoCrudRepository;
 import com.Ecommerce.infrastructure.entity.Productos;
 import com.Ecommerce.infrastructure.mapper.ProductoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 @Repository
-@EnableAutoConfiguration
 public class ProductoRepository implements com.Ecommerce.domain.repository.ProductoRepository {
 
     @Autowired

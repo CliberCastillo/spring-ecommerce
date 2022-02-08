@@ -1,19 +1,22 @@
 package com.Ecommerce.infrastructure.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "categorias")
 public class Categorias {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
     private Integer idCategoria;
-    @Basic
-    @Column(name = "descripcion")
+
     private String descripcion;
-    @Basic
-    @Column(name = "estado")
     private Boolean estado;
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Productos> productos;
 
     public Integer getIdCategoria() {
         return idCategoria;
@@ -39,25 +42,11 @@ public class Categorias {
         this.estado = estado;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Categorias that = (Categorias) o;
-
-        if (idCategoria != null ? !idCategoria.equals(that.idCategoria) : that.idCategoria != null) return false;
-        if (descripcion != null ? !descripcion.equals(that.descripcion) : that.descripcion != null) return false;
-        if (estado != null ? !estado.equals(that.estado) : that.estado != null) return false;
-
-        return true;
+    public List<Productos> getProductos() {
+        return productos;
     }
 
-    @Override
-    public int hashCode() {
-        int result = idCategoria != null ? idCategoria.hashCode() : 0;
-        result = 31 * result + (descripcion != null ? descripcion.hashCode() : 0);
-        result = 31 * result + (estado != null ? estado.hashCode() : 0);
-        return result;
+    public void setProductos(List<Productos> productos) {
+        this.productos = productos;
     }
 }

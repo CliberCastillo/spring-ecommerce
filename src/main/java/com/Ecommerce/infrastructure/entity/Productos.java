@@ -1,35 +1,35 @@
 package com.Ecommerce.infrastructure.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
+@Table(name = "productos")
 public class Productos {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
     private Integer idProducto;
-    @Basic
-    @Column(name = "nombre")
+
     private String nombre;
-    @Basic
+
     @Column(name = "id_categoria")
     private Integer idCategoria;
-    @Basic
+
     @Column(name = "codigo_barras")
     private String codigoBarras;
-    @Basic
+
     @Column(name = "precio_venta")
-    private BigDecimal precioVenta;
-    @Basic
+    private Double precioVenta;
+
     @Column(name = "cantidad_stock")
     private Integer cantidadStock;
-    @Basic
-    @Column(name = "estado")
+
     private Boolean estado;
+
     @ManyToOne
-    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria", nullable = false)
-    private Categorias categoriasByIdCategoria;
+    @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
+    private Categorias categoria;
 
     public Integer getIdProducto() {
         return idProducto;
@@ -63,11 +63,11 @@ public class Productos {
         this.codigoBarras = codigoBarras;
     }
 
-    public BigDecimal getPrecioVenta() {
+    public Double getPrecioVenta() {
         return precioVenta;
     }
 
-    public void setPrecioVenta(BigDecimal precioVenta) {
+    public void setPrecioVenta(Double precioVenta) {
         this.precioVenta = precioVenta;
     }
 
@@ -87,46 +87,11 @@ public class Productos {
         this.estado = estado;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Productos productos = (Productos) o;
-
-        if (idProducto != null ? !idProducto.equals(productos.idProducto) : productos.idProducto != null) return false;
-        if (nombre != null ? !nombre.equals(productos.nombre) : productos.nombre != null) return false;
-        if (idCategoria != null ? !idCategoria.equals(productos.idCategoria) : productos.idCategoria != null)
-            return false;
-        if (codigoBarras != null ? !codigoBarras.equals(productos.codigoBarras) : productos.codigoBarras != null)
-            return false;
-        if (precioVenta != null ? !precioVenta.equals(productos.precioVenta) : productos.precioVenta != null)
-            return false;
-        if (cantidadStock != null ? !cantidadStock.equals(productos.cantidadStock) : productos.cantidadStock != null)
-            return false;
-        if (estado != null ? !estado.equals(productos.estado) : productos.estado != null) return false;
-
-        return true;
+    public Categorias getCategoria() {
+        return categoria;
     }
 
-    @Override
-    public int hashCode() {
-        int result = idProducto != null ? idProducto.hashCode() : 0;
-        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        result = 31 * result + (idCategoria != null ? idCategoria.hashCode() : 0);
-        result = 31 * result + (codigoBarras != null ? codigoBarras.hashCode() : 0);
-        result = 31 * result + (precioVenta != null ? precioVenta.hashCode() : 0);
-        result = 31 * result + (cantidadStock != null ? cantidadStock.hashCode() : 0);
-        result = 31 * result + (estado != null ? estado.hashCode() : 0);
-        return result;
-    }
-
-
-    public Categorias getCategoriasByIdCategoria() {
-        return categoriasByIdCategoria;
-    }
-
-    public void setCategoriasByIdCategoria(Categorias categoriasByIdCategoria) {
-        this.categoriasByIdCategoria = categoriasByIdCategoria;
+    public void setCategoria(Categorias categorias) {
+        this.categoria = categorias;
     }
 }

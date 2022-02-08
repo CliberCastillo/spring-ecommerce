@@ -1,32 +1,35 @@
 package com.Ecommerce.infrastructure.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "compras")
 public class Compras {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_compra")
     private Integer idCompra;
-    @Basic
+
     @Column(name = "id_cliente")
     private String idCliente;
-    @Basic
-    @Column(name = "fecha")
-    private Timestamp fecha;
-    @Basic
+
+    private LocalDateTime fecha;
+
     @Column(name = "medio_pago")
     private String medioPago;
-    @Basic
-    @Column(name = "comentario")
+
     private String comentario;
-    @Basic
-    @Column(name = "estado")
     private String estado;
+
     @ManyToOne
-    @JoinColumn(name = "id_cliente", referencedColumnName = "id", nullable = false)
-    private Clientes clientesByIdCliente;
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+    private Clientes cliente;
+
+    @OneToMany(mappedBy = "producto")
+    private List<ComprasProductos> productos;
 
     public Integer getIdCompra() {
         return idCompra;
@@ -44,11 +47,11 @@ public class Compras {
         this.idCliente = idCliente;
     }
 
-    public Timestamp getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
@@ -76,39 +79,19 @@ public class Compras {
         this.estado = estado;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Compras compras = (Compras) o;
-
-        if (idCompra != null ? !idCompra.equals(compras.idCompra) : compras.idCompra != null) return false;
-        if (idCliente != null ? !idCliente.equals(compras.idCliente) : compras.idCliente != null) return false;
-        if (fecha != null ? !fecha.equals(compras.fecha) : compras.fecha != null) return false;
-        if (medioPago != null ? !medioPago.equals(compras.medioPago) : compras.medioPago != null) return false;
-        if (comentario != null ? !comentario.equals(compras.comentario) : compras.comentario != null) return false;
-        if (estado != null ? !estado.equals(compras.estado) : compras.estado != null) return false;
-
-        return true;
+    public Clientes getCliente() {
+        return cliente;
     }
 
-    @Override
-    public int hashCode() {
-        int result = idCompra != null ? idCompra.hashCode() : 0;
-        result = 31 * result + (idCliente != null ? idCliente.hashCode() : 0);
-        result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-        result = 31 * result + (medioPago != null ? medioPago.hashCode() : 0);
-        result = 31 * result + (comentario != null ? comentario.hashCode() : 0);
-        result = 31 * result + (estado != null ? estado.hashCode() : 0);
-        return result;
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
     }
 
-    public Clientes getClientesByIdCliente() {
-        return clientesByIdCliente;
+    public List<ComprasProductos> getProductos() {
+        return productos;
     }
 
-    public void setClientesByIdCliente(Clientes clientesByIdCliente) {
-        this.clientesByIdCliente = clientesByIdCliente;
+    public void setProductos(List<ComprasProductos> productos) {
+        this.productos = productos;
     }
 }
